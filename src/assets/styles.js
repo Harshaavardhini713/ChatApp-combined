@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         bottom: 0,
+        
         //   justifyContent: 'space-between',   
         //   bordercolor: 'black',
         //     borderWidth: 0.8,
@@ -50,6 +51,7 @@ export const styles = StyleSheet.create({
         // padding: 10,
         // margin: 10,
         borderRadius: 10,
+        // backgroundColor: '#B983FF',
         // width: '100%',
 
     },
@@ -103,6 +105,17 @@ export const styles = StyleSheet.create({
         // backgroundColor: '#f5f5f5',
         // borderWidth: 1,
         // borderColor: '#e5e5e5',
+    }, replyMessage: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        // padding: 5,
+        // margin: 10,
+        borderRadius: 10,
+        backgroundColor: 'grey',
+        width: '100%',
+        height: '80%',
+        // backgroundColor: '#f5f5f5',
     },
     innerCard: {
         marginLeft: -10,
@@ -122,6 +135,7 @@ export const styles = StyleSheet.create({
         marginTop: -7,
         borderBottomEndRadius: 10,
         borderBottomLeftRadius: 10,
+        backgroundColor: '#000',
         // height: 630,
     },
     time: {

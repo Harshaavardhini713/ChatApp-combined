@@ -21,6 +21,16 @@ import Search from './src/components/screens/Search';
 // import Home2 from './src/components/screens/Home2';
 import Profile from './src/components/screens/Profile';
 
+import Chats from './src/components/screens/Chats';
+import StarredMessages from './src/components/StarredMessages';
+
+// import GroupChat from './src/components/screens/GroupChat';
+import About from './src/components/screens/About';
+
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
+
 const Stack = createNativeStackNavigator();
 // const MainTab = createMaterialTopTabNavigator();
 
@@ -95,21 +105,20 @@ const ChatStackNavigator = props => {
         },
       }}>
       <Stack.Screen name="HomePage" component={HomePage} />
-
       <Stack.Screen name="ChatRoomScreen" component={ChatRoomScreen} />
-
       <Stack.Screen name="ContactScreen" component={ContactScreen} />
-
       <Stack.Screen name="Search" component={Search} />
-
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name='Chats' component={Chats}   initialParams={{ ...props }} options={{ headerShown: false }}  />
+     <Stack.Screen name='Starred Messages' component={StarredMessages} initialParams={{ ...props }}  options={{ headerShown: false }}  />
+     <Stack.Screen name="About" component={About} options={{title: 'Homies',}} />
     </Stack.Navigator>
   );
 };
 
 const AppNavigator = () => {
   const user = useSelector(state => state.chatuser.isLogin);
-  console.log(user);
+  // console.log(user);
 
   return (
     <NavigationContainer>
@@ -120,11 +129,16 @@ const AppNavigator = () => {
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <AppNavigator />
-      </PersistGate>
-    </Provider>
+    <>
+       <IconRegistry icons={EvaIconsPack}/>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <ApplicationProvider {...eva} theme={eva.light}>
+                <AppNavigator/>
+          </ApplicationProvider>
+        </PersistGate>
+      </Provider>
+    </>
   );
 };
 

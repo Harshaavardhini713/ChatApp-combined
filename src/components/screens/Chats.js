@@ -6,7 +6,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { Layout, Input, Text, Button } from '@ui-kitten/components';
 import Message from './Messages'
 import { SmileIcon , AttachmentIcon, SendIcon } from '../Icons' 
-import { styles } from '../../assests/styles';
+import { styles } from '../../assets/styles';
 import LoadingComponent from '../LoadingComponent';
 
 import HeaderComponent from '../HeaderComponent';
@@ -20,7 +20,7 @@ import { io } from 'socket.io-client';
 import { addMessage,getChatById,getChatByChatID } from '../apis'
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {deleteReplyMessages} from '../../Redux/actions/replyMessage';
+import {deleteReplyMessages} from '../../redux/actions/replyMessage';
 
 import DocumentPicker, { DirectoryPickerResponse, DocumentPickerResponse, isInProgress, types, } from 'react-native-document-picker';
 
@@ -31,6 +31,7 @@ const Chats = (props) => {
     // const socket = useRef();
     const [value, setValue] = React.useState('');
     const [messages, setMessages] = useState(null);
+    const {chatid, userid} = props.route.params;
 
     useEffect(()=> {
         const timer = setTimeout(() => {
@@ -48,7 +49,7 @@ const Chats = (props) => {
     const fetchData =  () => {
        // getChatById("627540a38872862d941962a3","62761eb5116252d1ed69208a")
        //6277997845d7ac98875ea319 , 627732ad8e2613c246d88a92
-        getChatByChatID("6277997845d7ac98875ea319")
+        getChatByChatID(chatid)
         .then(response => setMessages(response))
        .catch(err => console.log("A -", err));
       

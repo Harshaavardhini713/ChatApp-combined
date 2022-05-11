@@ -1,15 +1,15 @@
 import React, { useEffect,useCallback  } from 'react';
 import { View, TouchableOpacity ,Image } from 'react-native'
 import { Text, OverflowMenu, MenuItem, Button,Card,  } from '@ui-kitten/components';
-import { styles } from '../assests/styles';
+import { styles } from '../assets/styles';
 import { useSelector,useDispatch } from 'react-redux';
-import { setStarredMessages, removeStarredMessages } from '../Redux/actions/starredMessagesActions';
+import { setStarredMessages, removeStarredMessages } from '../redux/actions/starredMessagesActions';
 import Snackbar from 'react-native-snackbar';
 import { format,render } from 'timeago.js';
 import { deleteMessage } from './apis';
 import { DocIcon } from './Icons'
 import Icon from 'react-native-vector-icons/Ionicons';
-import { addReplyMessages } from '../Redux/actions/replyMessage';
+import { addReplyMessages } from '../redux/actions/replyMessage';
 
 
 const SingleMessageComponet = (props) => {
@@ -21,7 +21,7 @@ const SingleMessageComponet = (props) => {
 
     const setData = (ele) => {
       if(visible){
-      dispatch(setStarredMessages({id:ele._id,name: ele.userName,profile: require('../assests/demo.png'), message: ele.message}));
+      dispatch(setStarredMessages({id:ele._id,name: ele.userName,profile: require('../assets/demo.png'), message: ele.message}));
       // setVisible(false);
       Snackbar.show({
         text: 'Added to Starred Messages',
@@ -50,7 +50,7 @@ const SingleMessageComponet = (props) => {
 
 
     const deleteMsg =  (id) => {
-      console.log("id", id);
+      // console.log("id", id);
       deleteMessage(id)
       .catch(err => console.log("A -", err));
     }

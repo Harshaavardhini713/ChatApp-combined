@@ -1,23 +1,9 @@
 import React from 'react'
 import {Divider, Card, Layout, Icon, Input, Text, Button,  Avatar, MenuItem, OverflowMenu } from '@ui-kitten/components';
-import { styles } from '../assests/styles';
+import { styles } from '../assets/styles';
 import { Alert } from 'react-native';
 import { deleteChat } from './apis';
 
-const list = [
-    // {
-    //     "type": "isIndividual",
-    //     "name": "John Doe",
-    //     'profile': require('../assests/demo.png'),
-    //     'status': 'online',
-    // },
-    {
-        "type": "isGroup",
-        "name": "Avengers",
-        'profile': require('../assests/demo.png'),
-        "members": ["ironman", "hulk", "thor", "captain america", "black widow"],
-    },
-]
 const HeaderComponent = (props) => {
   
     const { navigation,headerInfo  } = props;
@@ -60,16 +46,15 @@ const HeaderComponent = (props) => {
                 ],
             );
         }
-
     return (
    
     <Layout style={styles.headerContainer} level='1'> 
-        <Button style={styles.headerButton} appearance='ghost'  accessoryLeft={ <Icon name='arrow-ios-back-outline'/>}> </Button>
+        <Button style={styles.headerButton} appearance='ghost'  accessoryLeft={ <Icon name='arrow-ios-back-outline'/>} onPress={()=> {navigation.navigate("HomePage")}} > </Button>
         <Layout style={styles.header}>
             <Avatar 
             style={styles.avatar} 
             size='giant' 
-            source={require('../assests/demo.png')}
+            source={{uri: headerInfo[0].avatar}}
             
             />
         </Layout>
@@ -77,10 +62,13 @@ const HeaderComponent = (props) => {
             <Text 
             category='h6' 
             onPress= {() => {
-                headerInfo[0].type === 'group' ? navigation.navigate('Group Profile') : {};
+                headerInfo[0].conType == 'group' ? 
+                navigation.navigate('About',{
+                    groupinfo: headerInfo[0]
+                }) : {};
             }}
             > {headerInfo[0].title} </Text>
-            {headerInfo[0].type === 'group' ? <Text category='s1'> {headerInfo[0].users.length} Members </Text> : <Text appearance='hint'>online </Text>}
+            {headerInfo[0].conType === 'group' ? <Text category='s1'> {headerInfo[0].users.length} Members </Text> : <Text appearance='hint'>online </Text>}
            
             </Layout>
         <Layout style={styles.headerRight}>

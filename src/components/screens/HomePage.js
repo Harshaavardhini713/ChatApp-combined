@@ -64,7 +64,7 @@ export default function HomePage(props) {
             />
             <Menu.Item
               onPress={() => {
-                console.log('Starred Messages');
+                navigation.navigate('Starred Messages');
               }}
               title="Starred Messages"
             />

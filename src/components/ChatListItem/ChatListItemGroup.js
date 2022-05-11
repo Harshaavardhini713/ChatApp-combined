@@ -18,7 +18,7 @@ const ChatListItemGroup = props => {
   var yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
 
   const nav = () => {
-    navigation.navigate('ChatRoomScreen', {
+    navigation.navigate('Chats', {
       chatid: chatRoom.chat._id,
       userid: 0,
     });

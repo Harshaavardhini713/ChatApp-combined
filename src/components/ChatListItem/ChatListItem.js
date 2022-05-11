@@ -3,13 +3,14 @@ import {View, Text, Image, TouchableWithoutFeedback} from 'react-native';
 import styles from './style';
 import moment from 'moment';
 import {useNavigation} from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 const ChatListItem = props => {
   const chatRoom = props;
   const navigation = useNavigation();
   console.log(chatRoom);
 
-  const id = '62749fbebc271b934153e3d6';
+  const id = useSelector(state => state.chatuser.id);
 
   const currentTime = new Date();
   var currentOffset = currentTime.getTimezoneOffset();
@@ -22,7 +23,7 @@ const ChatListItem = props => {
   // const {navigation} = props;
 
   const nav = () => {
-    navigation.navigate('ChatRoomScreen', {
+    navigation.navigate('Chats', {
       chatid: chatRoom.chat._id,
       userid: 0,
     });

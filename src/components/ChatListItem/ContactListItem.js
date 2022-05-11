@@ -18,7 +18,7 @@ const ContactListItem = props => {
   // const {navigation} = props;
 
   const nav = () => {
-    navigation.navigate('ChatRoomScreen', {
+    navigation.navigate('Chats', {
       chatid: 0,
       userid: chatRoom.contact._id,
     });

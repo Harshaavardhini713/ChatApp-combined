@@ -16,7 +16,6 @@ class About extends Component {
         }
     }
 
-
     selectContact(item) {
         if (!item.Choose) {
             const newArray = [...this.state.ContactList];
@@ -59,8 +58,10 @@ class About extends Component {
             ContactPopup: false
         })
     }
-
+        
     render() {
+        const { groupInfo } = this.props.route.params;
+        // data = groupInfo;
         return (
            
                 <ScrollView style={{ backgroundColor: '#000000' }}>

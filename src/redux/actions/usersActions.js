@@ -14,10 +14,10 @@ export const setLogin = user => {
   };
 };
 
-export const setLogout = user => {
+export const setLogout = () => {
   return {
     type: ActionTypes.SET_LOGOUT,
-    payload: user,
+    payload: null,
   };
 };
 

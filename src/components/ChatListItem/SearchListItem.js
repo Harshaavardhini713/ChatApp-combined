@@ -2,13 +2,14 @@ import React from 'react';
 import {View, Text, Image, TouchableWithoutFeedback} from 'react-native';
 import styles from './style';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 const SearchListItem = props => {
   const {chatRoom} = props;
   const navigation = useNavigation();
-  console.log('in search');
-  console.log(chatRoom);
-  const id = '62749fbebc271b934153e3d6';
+  // console.log('in search');
+  // console.log(chatRoom);
+  const id = useSelector(state => state.chatuser.id);
 
   // const {navigation} = props;
 

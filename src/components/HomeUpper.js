@@ -5,6 +5,7 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import ChatScreen from './screens/ChatListScreen';
 import ChatScreenGroup from './screens/ChatScreenGroup';
 import {getUserGroupChat, getUserPersonalChat} from './apis';
+import { useSelector } from 'react-redux';
 // import {useSelector} from 'react-redux';
 // import {counterValue} from '../redux/reducer/counterReducer';
 
@@ -28,11 +29,15 @@ function StatusScreen() {
 const Tab = createMaterialTopTabNavigator();
 
 export default function UpperMenu() {
+
+
+  const id = useSelector(state => state.chatuser.id);
+
   let value1 = 0;
   const [chats, setChats] = useState(null);
   const fetchData = () => {
     if (chats === null) {
-      getUserPersonalChat()
+      getUserPersonalChat(id)
         .then(response => setChats(response))
         .catch(err => console.log('A -', err));
     }
@@ -41,7 +46,7 @@ export default function UpperMenu() {
   const [gchats, setGchats] = useState(null);
   const fetchData1 = () => {
     if (chats === null) {
-      getUserGroupChat()
+      getUserGroupChat(id)
         .then(response => setGchats(response))
         .catch(err => console.log('A -', err));
     }

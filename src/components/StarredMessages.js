@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView } from 'react-native';
 import { Avatar,Button, Divider, Icon, List, ListItem, TopNavigation, TopNavigationAction, OverflowMenu, MenuItem } from '@ui-kitten/components';
 import { SearchIcon, BackIcon, SettingsIcon, MenuIcon } from './Icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeStarredMessages } from '../Redux/actions/starredMessagesActions';
+import { removeStarredMessages } from '../redux/actions/starredMessagesActions';
 import Snackbar from 'react-native-snackbar';
 
 
@@ -80,7 +80,7 @@ const StarredMessages = (props) => {
       );
     
       const renderItemIcon = (props) => (
-        <Avatar style={styles.avatar} size='medium' source={require('../assests/demo.png')}/>
+        <Avatar style={styles.avatar} size='medium' source={require('../assets/demo.png')}/>
       );
     
       const renderItem = ({ item, index }) => (

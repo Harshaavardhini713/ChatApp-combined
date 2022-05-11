@@ -14,7 +14,9 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from "react-native-reanimated";
 import updateProfile from "../../components/UpdateProfile";
 import {useSelector,useDispatch} from 'react-redux';
-import {setName,setAvatar} from '../../redux/actions/usersActions'
+import {setName,setAvatar,setLogout} from '../../redux/actions/usersActions'
+import instance from '../../config/axiosConfig';
+
 
 function Profile({navigation})
 {
@@ -128,6 +130,36 @@ function Profile({navigation})
         </View>
     )
 
+  const logout = async () => {
+    console.log('in logout');
+    try {
+      const response = await instance.post('logout');
+      if (response.status === 201 || response.status === 200) {
+        console.log(`User Signed out: ${response.data}`);
+        dispatch(setLogout());
+        Alert.alert('Successful Sign Out', 'You have successfully signed out');
+      } else {
+        console.log(`User couldn't be signed out: ${response.data}`);
+        Alert.alert(
+          "User couldn't be signed out",
+          'There was an error while signing out, please try again',
+        );
+      }
+    } catch (error) {
+      if (error.response) {
+        const err = error.response.data;
+        Alert.alert('Error', err);
+      } else if (error.request) {
+        Alert.alert('Error', error.request);
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+        Alert.alert('Error', error.message);
+      }
+    }
+  };
+
+
     return(
         <View style={styles.mainContainer}>
 
@@ -169,7 +201,7 @@ function Profile({navigation})
             </View>
 
             <View style={styles.subContainer}>
-                <TouchableOpacity style={styles.logoutButton}>
+                <TouchableOpacity style={styles.logoutButton} onPress={()=>{logout()}}>
                     <Text style={styles.logoutButtonText}>{'Logout'}</Text>
                 </TouchableOpacity>
             </View>
