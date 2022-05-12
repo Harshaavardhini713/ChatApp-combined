@@ -105,7 +105,7 @@ const searchChat = id => {
 
 const exitGroup = (group, user) => {
   const data = {group, user};
-  return fetch('http://192.168.0.100:12345/api/v1/chat/exitGroup', {
+  return fetch('http://10.0.2.2:12345/api/v1/chat/exitGroup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ const exitGroup = (group, user) => {
 
 const reportChat = (group, user) => {
   const data = {group, user};
-  return fetch('http://192.168.0.100:12345/api/v1/chat/reportChat', {
+  return fetch('http://10.0.2.2:12345/api/v1/chat/reportChat', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -131,7 +131,7 @@ const reportChat = (group, user) => {
 
 const addMembers = (group, user) => {
   const data = {group, user};
-  return fetch('http://192.168.0.100:12345/api/v1/chat/addMembers', {
+  return fetch('http://10.0.2.2:12345/api/v1/chat/addMembers', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -141,6 +141,19 @@ const addMembers = (group, user) => {
     .then(response => response.json())
     .catch(err => console.log('Errors -', err));
 };
+
+const chatCreate = (chat) => {
+  return fetch('http://10.0.2.2:12345/chatMessage',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(chat),
+      })
+  .then(response => response.json())
+  .catch(err => console.log('Errors -', err));
+} 
 
 export {
   getChats,
@@ -156,4 +169,5 @@ export {
   exitGroup,
   reportChat,
   addMembers,
+  chatCreate
 };

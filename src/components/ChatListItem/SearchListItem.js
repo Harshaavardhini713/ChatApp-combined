@@ -14,7 +14,7 @@ const SearchListItem = props => {
   // const {navigation} = props;
 
   const nav = () => {
-    navigation.navigate('ChatRoomScreen', {chatid: chatRoom._id, userid: 0});
+    navigation.navigate('Chats', {chatid: chatRoom._id, userid: 0});
   };
 
   return (

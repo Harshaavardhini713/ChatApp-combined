@@ -42,7 +42,7 @@ const HeaderComponent = (props) => {
                         onPress: () => {},
                         style: 'cancel',
                     },
-                    {text: 'OK', onPress: () => deleteChat(headerInfo._id)},
+                    {text: 'OK', onPress: () => deleteChat(headerInfo[0]._id)},
                 ],
             );
         }

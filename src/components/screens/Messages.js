@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
 import  SingleMessageComponet  from '../SingleMessageComponet'
 
 
@@ -7,21 +7,27 @@ const Messages = (props) => {
     
     const messages = props.messages ?? [];
     const newList = messages.length > 0 ? messages[0]["messages"]: [];
-    console.log("newList", messages);
-
-   return newList.map((message, index) => {
-       return (
-        <>
-            {message.type === "sender"
-                ? <View  key= {index} style = {[styles.sender, styles.cardView]}>
-                        <SingleMessageComponet ele={message} />
-                </View>
-                : <View  key={index} style = {styles.cardView}>
-                        <SingleMessageComponet ele={message} />
-                </View>}
-            </>
-            )
-        })
+    
+    if(newList) {
+        return newList.map((message, index) => {
+            return (
+                <>  
+                    {message.type === "sender"
+                        ? 
+                        <View  key= {index} style = {[styles.sender, styles.cardView]}>
+                                <SingleMessageComponet ele={message} />
+                        </View>
+                        : <View  key={index} style = {styles.cardView}>
+                                <SingleMessageComponet ele={message} />
+                        </View>}
+                    </>
+                    )
+                })
+    } else {
+        return (
+        <View style = {styles.cardView}>   
+        </View>
+    )}
 }
 
 

@@ -1,17 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, Image, TouchableWithoutFeedback} from 'react-native';
 import styles from './style';
 import moment from 'moment';
 import {useNavigation} from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import { chatCreate } from '../apis';
 
 const ChatListItem = props => {
   const chatRoom = props;
   const navigation = useNavigation();
-  console.log(chatRoom);
-
   const id = useSelector(state => state.chatuser.id);
-
   const currentTime = new Date();
   var currentOffset = currentTime.getTimezoneOffset();
   var ISTOffset = 330; // IST offset UTC +5:30
@@ -20,13 +18,8 @@ const ChatListItem = props => {
   );
   var yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
 
-  // const {navigation} = props;
-
   const nav = () => {
-    navigation.navigate('Chats', {
-      chatid: chatRoom.chat._id,
-      userid: 0,
-    });
+    navigation.navigate('Chats', {chatid: chatRoom.chat._id})
   };
 
   return (

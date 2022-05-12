@@ -1,63 +1,40 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {View, Text, Image, TouchableWithoutFeedback} from 'react-native';
-//import {ChatRoom} from '../../../Types';
-// import styles from './style';
-//import moment from 'moment';
 import {useNavigation} from '@react-navigation/native';
-// import {useDispatch} from 'react-redux';
-// import {incremented} from '../../redux/reducer/counterReducer';
+import { chatCreate } from '../apis';
+
+import { useSelector,useDispatch } from 'react-redux';
 
 const ContactListItem = props => {
   const chatRoom = props;
   const navigation = useNavigation();
-  // const dispatch = useDispatch();
 
-  // const user = chatRoom.contact;
-  console.log(chatRoom);
+  const id = useSelector(state => state.chatuser.id);
+  const currentId = useSelector(state => state.chatuser.id);
+  const userid = chatRoom.contact._id
 
-  // const {navigation} = props;
+  const chat ={
+    message: null,
+    users: `${userid},${currentId}`,
+    type:"sender",
+    conType: "individual",
+    title: chatRoom.contact.name,
+    avatar: chatRoom.contact.avatar
+  }
+ 
 
-  const nav = () => {
-    navigation.navigate('Chats', {
-      chatid: 0,
-      userid: chatRoom.contact._id,
-    });
+
+  const fetchData = async() => {
+    chatCreate(chat)
+    .then(response=>navigation.navigate('Chats', {chatid: response._id}))
+    .catch(err=>console.log("ABc - ", err))
   };
 
-  // const styles = StyleSheet.create({
-  //   avatar: {
-  //     width: 50,
-  //     height: 50,
-  //     borderRadius: 50,
-  //     marginRight: 15,
-  //   },
 
-  //   container: {
-  //     flexDirection: 'row',
-  //     width: '100%',
-  //     justifyContent: 'space-between',
-  //     padding: 10,
-  //   },
-  //   midContainer: {
-  //     justifyContent: 'space-around',
-  //   },
-  //   leftContainer: {
-  //     flexDirection: 'row',
-  //   },
-  //   username: {
-  //     fontWeight: 'bold',
-  //     fontSize: 16,
-  //     color: 'white',
-  //   },
-  //   lastMessage: {
-  //     fontSize: 15,
-  //     color: 'grey',
-  //   },
-  //   time: {
-  //     fontSize: 13,
-  //     color: 'grey',
-  //   },
-  // });
+  const nav = () => {
+      console.log('in nav');
+      fetchData();
+  };
 
   return (
     <View
@@ -101,60 +78,3 @@ const ContactListItem = props => {
 };
 
 export default ContactListItem;
-
-// import React from 'react';
-// import {View, Text, StyleSheet} from 'react-native';
-// const Contact = ({contact}) => {
-//   return (
-//     <View style={styles.contactCon}>
-//       <View style={styles.imgCon}>
-//         <View style={styles.placeholder}>
-//           <Text style={styles.txt}>{contact?.givenName[0]}</Text>
-//         </View>
-//       </View>
-//       <View style={styles.contactDat}>
-//         <Text style={styles.name}>
-//           {contact?.givenName} {contact?.middleName && contact.middleName + ' '}
-//           {contact?.familyName}
-//         </Text>
-//         <Text style={styles.phoneNumber}>
-//           {contact?.phoneNumbers[0]?.number}
-//         </Text>
-//       </View>
-//     </View>
-//   );
-// };
-// const styles = StyleSheet.create({
-//   contactCon: {
-//     flex: 1,
-//     flexDirection: 'row',
-//     padding: 5,
-//     borderBottomWidth: 0.5,
-//     borderBottomColor: '#d9d9d9',
-//   },
-//   imgCon: {},
-//   placeholder: {
-//     width: 55,
-//     height: 55,
-//     borderRadius: 30,
-//     overflow: 'hidden',
-//     backgroundColor: '#d9d9d9',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   contactDat: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     paddingLeft: 5,
-//   },
-//   txt: {
-//     fontSize: 18,
-//   },
-//   name: {
-//     fontSize: 16,
-//   },
-//   phoneNumber: {
-//     color: '#888',
-//   },
-// });
-// export default Contact;
