@@ -12,7 +12,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import ImagePicker from 'react-native-image-crop-picker';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from "react-native-reanimated";
-import updateProfile from "../../components/UpdateProfile";
+import updateProfile from "..//UpdateProfile";
 import {useSelector,useDispatch} from 'react-redux';
 import {setName,setAvatar,setLogout} from '../../redux/actions/usersActions'
 import instance from '../../config/axiosConfig';
@@ -22,11 +22,11 @@ function Profile({navigation})
 {
 
     LogBox.ignoreAllLogs();
-    //const[image,setImage]=useState('https://i.pinimg.com/236x/73/8b/82/738b82ae3c1a1b793aa9a68d9b19439f.jpg');
 
 
     const{id,uid,name,phone,password,avatar,isLogin}=useSelector(state=>state.chatuser);
     
+    const[image,setImage]=useState(avatar);
     // const profile = instance.get('users/profile');
     // if(profile)
     //           {
@@ -38,6 +38,7 @@ function Profile({navigation})
     const dispatch=useDispatch();
     //const[name,setName]=useState('Kashyap');
     const[newName,setNewName]=useState(name);
+    const[updatedName,setUpdatedName]=useState(name);
 
     const[isPicAvailabe,setIsPicAvailabe]=useState(true);
 
@@ -53,7 +54,7 @@ function Profile({navigation})
             cropping: true,
           }).then(image => {
             console.log(image);
-            //setImage(image.path);
+            setImage(image.path);
             updateProfile.changePhoto(phone,password,uid,image.path);
             dispatch(setAvatar(image.path))
             if(!isPicAvailabe)
@@ -72,7 +73,7 @@ function Profile({navigation})
             cropping: true
           }).then(image => {
             console.log(image);
-            //setImage(image.path);
+            setImage(image.path);
             console.log(name);
             updateProfile.changePhoto(phone,password,uid,image.path);
             dispatch(setAvatar(image.path))
@@ -86,7 +87,7 @@ function Profile({navigation})
     }
 
     const removeProfilePic = () =>{
-        //setImage('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
+        setImage('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
         const newAvatar = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
         dispatch(setAvatar(newAvatar));
         updateProfile.changePhoto(phone,password,uid,newAvatar);
@@ -173,7 +174,7 @@ function Profile({navigation})
                 enabledGestureInteraction={true}
             />
             <View style={styles.profileHeader}>
-                <Image style={styles.image} source={{uri:avatar}}/>
+                <Image style={styles.image} source={{uri:image}}/>
                 <TouchableOpacity onPress={()=>bs.current.snapTo(0)}>
                     <Text>Change Profile Picture</Text>
                 </TouchableOpacity>
@@ -185,10 +186,10 @@ function Profile({navigation})
                 <View style={styles.profileBody}>
                     <TextInput
                         style={styles.profileBody1}
-                        placeholder={name}
+                        placeholder={updatedName}
                         onChangeText={(value)=>{setNewName(value)}}
                     />
-                    <TouchableOpacity style={styles.iconStyle} onPress={()=>{dispatch(setName(newName));updateProfile.changeName(phone,password,uid,newName);alert('Name Changed!!!')}}>
+                    <TouchableOpacity style={styles.iconStyle} onPress={()=>{setUpdatedName(updatedName);dispatch(setName(newName));updateProfile.changeName(phone,password,uid,newName);alert('Name Changed!!!')}}>
                         <Icon name="floppy-o" size={30} color='#808e9b'/>
                     </TouchableOpacity>
                 </View>
