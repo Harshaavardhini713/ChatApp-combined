@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -14,15 +14,17 @@ import CheckBox from '@react-native-community/checkbox';
 import data from '../data';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {exitGroup, addMembers, reportChat} from '../apis';
+import  { useSelector } from 'react-redux';  
 
 class About extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id : null,
       SelectedContact: [],
       SavedContact: [],
       ContactPopup: false,
-      ContactList: data,
+      ContactList: this.props.route.params.groupinfo['users']//data,
     };
   }
 
@@ -71,7 +73,15 @@ class About extends Component {
       this.setState({SelectedContact: deleteArrayValue});
     }
   }
-
+    DummyView = () => {
+      const id = useSelector(state => state.chatuser.id);
+      useEffect(() => {
+          this.setState({
+              id : id
+          })
+      }, [])
+      return null
+  }
   onChoose() {
     this.setState({
       SavedContact: this.state.SelectedContact,
@@ -80,10 +90,14 @@ class About extends Component {
   }
 
   render() {
-    const {groupInfo} = this.props.route.params;
+    
+    const groupInfo = this.props.route.params.groupinfo;
     // data = groupInfo;
+    // ContactList = this.props.route.params.groupinfo['users']
     return (
+      
       <ScrollView style={{backgroundColor: '#000000'}}>
+         <this.DummyView/>
         <View style={{marginTop: 23, alignItems: 'center'}}>
           <Text style={{color: '#fff', fontSize: 20, fontWeight: 'bold'}}>
             Group Members
@@ -91,16 +105,16 @@ class About extends Component {
         </View>
         <View style={styles.selectView} />
 
-        {this.state.SavedContact.length > 0 ? (
-          <View style={{marginTop: 5}}>
-            <Text style={styles.selectListTitle}>Contact List</Text>
+       
+          <View style={{marginTop: 10}}>
+            {/* <Text style={styles.selectListTitle}>Contact List</Text> */}
             <ScrollView>
               <View style={styles.cardView}>
-                {this.state.SavedContact.map(item => (
+                {this.state.ContactList.map(item => (
                   <View style={styles.cardMain}>
                     <Image
                       style={styles.contImage}
-                      source={{uri: item.Avatar}}
+                      source={{uri: item.avatar}}
                     />
                     <Text style={styles.contName}>{item.name}</Text>
                   </View>
@@ -108,9 +122,7 @@ class About extends Component {
               </View>
             </ScrollView>
           </View>
-        ) : (
-          <Text style={styles.noContactSelected}>Ad</Text>
-        )}
+     
 
         <Modal transparent={true} visible={this.state.ContactPopup}>
           <View style={styles.modalMain}>
@@ -188,7 +200,16 @@ class About extends Component {
             />
             <TouchableOpacity
               style={styles.button}
-              onPress={() => Alert.alert('Report a group')}>
+              onPress={() => {
+                Alert.alert("You have reported the group", "", [
+                  {
+                    text: "OK",
+                    onPress: () => {
+                      reportChat(groupInfo._id, groupInfo['users'][3]._id).then(res => {
+                          Alert.alert("Group has been reported");
+                      }
+                      )}}]);
+              }}>
               <Text style={styles.textBtn}>Report</Text>
             </TouchableOpacity>
           </View>
@@ -200,7 +221,17 @@ class About extends Component {
             />
             <TouchableOpacity
               style={styles.button}
-              onPress={() => Alert.alert('Exit the group')}>
+              onPress={() => {
+                Alert.alert("You are no longer participant of the group", "", [
+                  {
+                    text: "OK",
+                    onPress: () => {
+                      exitGroup(groupInfo._id, groupInfo['users'][3]._id).then(res => {
+                       
+                          Alert.alert("You have left the group");
+                      })}}]);
+                      this.props.navigation.navigate('HomePage' )
+              }}>
               <Text style={styles.textBtn}>Exit</Text>
             </TouchableOpacity>
           </View>

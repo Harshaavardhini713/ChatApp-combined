@@ -26,7 +26,7 @@ const ContactScreen = props => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [contacts]);
   // useEffect(() => {
   //   Contacts.getAll()
   //     .then(contacts => {
